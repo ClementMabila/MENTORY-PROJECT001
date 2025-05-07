@@ -54,6 +54,21 @@
       background-color: #1976D2;
     }
 
+    button.register-button {
+      margin-bottom: 15px;
+    }
+
+    a.login-button {
+      display: block;
+      width: 100%;
+      border: 1px solid #000;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      text-decoration: none;
+      color: #000;
+    }
+
     .error-message {
       color: red;
       margin-top: 10px;
@@ -78,7 +93,8 @@
       <input type="email" id="email" placeholder="Email" required />
       <input type="password" id="password" placeholder="Password" required />
       <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-      <button type="submit">Register</button>
+      <button type="submit" class="register-button">Register</button>
+      <a href="./login.html" class="login-button">Login</a>
       <div class="error-message" id="errorMsg"></div>
       <div class="success-message" id="successMsg">Registration successful!</div>
     </form>
