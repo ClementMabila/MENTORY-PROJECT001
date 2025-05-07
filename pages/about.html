@@ -39,6 +39,8 @@
         }
 
         .section-title {
+            width: 80%;
+            display: inline-block;
             text-align: center;
             margin-bottom: 60px;
             font-size: 2.5rem;
@@ -193,13 +195,32 @@
                 height: 250px;
             }
         }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: var(--bg);
+            border-radius: 40px;
+           
+        }
+        .back-link:hover {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            transition: background-color 0.3s ease;
+        }
+     
     </style>
 </head>
 <body>
     <section class="about-section">
         <div class="container">
+           
+            <a href="../index.html" class="back-link"><</a>
             <h2 class="section-title">About Our Team</h2>
-            
+        
             <div class="about-content">
                 <div class="team-photo">
                     <div class="photo-frame">
