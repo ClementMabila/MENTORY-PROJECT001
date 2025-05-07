@@ -5,8 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register Page</title>
   <style>
+    :root {
+      --bg-dark: #121218;
+      --light-color: #E0E0FF;
+      --primary-color: #BA68C8;
+      --primary-dark: #9C27B0;
+      --secondary-color: #E0E0FF;
+      --white: #fff;
+    }
+
     body {
-      background-color: #f4f4f4;
+      background-color: var(--bg-dark);
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
@@ -25,6 +34,7 @@
     }
 
     .register-container h2 {
+      color: var(--primary-dark);
       margin-bottom: 20px;
       text-align: center;
     }
@@ -42,16 +52,16 @@
     .register-container button {
       width: 100%;
       padding: 12px;
-      background-color: #2196F3;
-      color: white;
+      color: var(--white);
       border: none;
       border-radius: 5px;
       font-size: 16px;
       cursor: pointer;
+      background-color: var(--primary-dark);
     }
 
     .register-container button:hover {
-      background-color: #1976D2;
+      background-color: var(--primary-color);
     }
 
     button.register-button {
@@ -61,12 +71,12 @@
     a.login-button {
       display: block;
       width: 100%;
-      border: 1px solid #000;
+      border: 1px solid var(--primary-color);
       padding: 10px;
       text-align: center;
       border-radius: 5px;
       text-decoration: none;
-      color: #000;
+      color: var(--primary-dark);
     }
 
     .error-message {
