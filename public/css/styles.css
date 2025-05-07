@@ -1,16 +1,55 @@
 
-* /* Base styles */
-:root {
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* :root {
   --primary-color: #2563eb;
+  --primary: #6e48aa;
   --primary-dark: #1d4ed8;
+  --primary-dark: #4b2d7f;
   --secondary-color: #64748b;
   --dark-color: #1e293b;
+  --dark-color: #4b2d7f;
   --light-color: #f8fafc;
   --accent-color: #3b82f6;
   --border-radius: 8px;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --transition: all 0.3s ease;
+} */
+
+:root {
+  --bg-dark: #121218;
+  --light-color: #E0E0FF;
+  --primary-color: #BA68C8;
+  --primary-dark: #9C27B0;
+  --secondary-color: #E0E0FF;
+  --white: #fff;
 }
+
+body {
+  background-color: #121218;
+}
+
+p.specialization {
+  color: #E0E0FF;
+}
+
+/*
+--primary: #6e48aa;
+--primary-dark: #4b2d7f;
+--secondary: #9d50bb;
+--accent: #4776e6;
+--text: #e0e0e0;
+--text-light: #f5f5f5;
+--text-dark: #b0b0b0;
+--bg: #121212;
+--bg-light: #1e1e1e;
+--bg-lighter: #2a2a2a;
+*/
 
 * {
   margin: 0;
@@ -21,8 +60,8 @@
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   line-height: 1.6;
-  color: var(--dark-color);
-  background-color: #f9fafb;
+  color: var(--light-color);
+  background-color: var(--bg-dark);
 }
 
 .container {
@@ -48,6 +87,7 @@ h2 {
   position: relative;
   padding-bottom: 1rem;
   margin-bottom: 2rem;
+  color: var(--white);
 }
 
 h2::after {
@@ -76,13 +116,11 @@ a {
 }
 
 a:hover {
-  color: var(--primary-dark);
+  color: var(--light-color);
 }
 
 /* Header */
 header {
-  background: linear-gradient(to right, var(--dark-color), #334155);
-  color: var(--light-color);
   padding: 4rem 0;
 }
 
@@ -97,7 +135,7 @@ header {
 }
 
 .header-text h1 {
-  color: white;
+  color: var(--white);
   margin-bottom: 0.5rem;
 }
 
@@ -113,7 +151,7 @@ header {
   height: 250px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid rgba(255, 255, 255, 0.2);
+  border: 4px solid var(--primary-color);
   box-shadow: var(--box-shadow);
 }
 
@@ -126,7 +164,7 @@ nav ul {
 }
 
 nav a {
-  color: var(--light-color);
+  color: var(--primary-dark);
   font-weight: 500;
   padding: 0.5rem 0;
   position: relative;
@@ -153,7 +191,7 @@ nav a:hover::after {
 }
 
 .section:nth-child(even) {
-  background-color: white;
+  background-color: var(--white);
 }
 
 /* Projects */
@@ -163,8 +201,16 @@ nav a:hover::after {
   gap: 2rem;
 }
 
+#projects .container h2 {
+  color: var(--primary-dark);
+}
+
+.projects-container .project-content h3 {
+  color: var(--bg-dark);
+}
+
 .project-card {
-  background-color: white;
+  background-color: var(--white);
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: var(--box-shadow);
@@ -194,9 +240,13 @@ nav a:hover::after {
   margin-top: 1rem;
 }
 
+.projects-container .project-content p {
+  color: var(--bg-dark);
+}
+
 .tag {
-  background-color: #e2e8f0;
-  color: var(--secondary-color);
+  background-color: var(--bg-dark);
+  color: var(--white);
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.875rem;
@@ -212,14 +262,14 @@ nav a:hover::after {
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius);
   background-color: var(--primary-color);
-  color: white;
+  color: var(--white);
   font-weight: 500;
   transition: var(--transition);
 }
 
 .project-btn:hover {
   background-color: var(--primary-dark);
-  color: white;
+  color: var(--white);
 }
 
 .project-btn.secondary {
@@ -230,7 +280,7 @@ nav a:hover::after {
 
 .project-btn.secondary:hover {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--white);
 }
 
 /* Contact form */
@@ -260,7 +310,7 @@ input:focus, textarea:focus {
 button[type="submit"] {
   padding: 0.75rem 1.5rem;
   background-color: var(--primary-color);
-  color: white;
+  color: var(--white);
   border: none;
   border-radius: var(--border-radius);
   font-weight: 500;
@@ -285,18 +335,18 @@ footer {
 .social-icons {
     margin-top: 1rem;
   }
-  
+
   .social-icons a img {
     width: 30px;
     height: 30px;
     margin-right: 10px;
     transition: transform 0.3s;
   }
-  
+
   .social-icons a img:hover {
     transform: scale(1.2);
   }
-  
+
 .social-link:hover {
   color: var(--accent-color);
 }
@@ -308,24 +358,24 @@ footer {
     text-align: center;
     gap: 2rem;
   }
-  
+
   h2::after {
     left: 50%;
     transform: translateX(-50%);
   }
-  
+
   nav ul {
     justify-content: center;
   }
-  
+
   .projects-container {
     grid-template-columns: 1fr;
   }
-  
+
   .project-links {
     justify-content: center;
   }
-  
+
   button[type="submit"] {
     justify-self: center;
   }
