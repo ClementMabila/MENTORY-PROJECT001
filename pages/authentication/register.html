@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register Page</title>
+  <style>
+    body {
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .register-container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .register-container h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .register-container input[type="text"],
+    .register-container input[type="email"],
+    .register-container input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .register-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .register-container button:hover {
+      background-color: #1976D2;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      display: none;
+      text-align: center;
+    }
+
+    .success-message {
+      color: green;
+      margin-top: 10px;
+      display: none;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="register-container">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+      <button type="submit">Register</button>
+      <div class="error-message" id="errorMsg"></div>
+      <div class="success-message" id="successMsg">Registration successful!</div>
+    </form>
+  </div>
+
+  <script>
+    const registerForm = document.getElementById('registerForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+
+    registerForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      errorMsg.style.display = 'none';
+      successMsg.style.display = 'none';
+
+      if (password !== confirmPassword) {
+        errorMsg.textContent = "Passwords do not match.";
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      if (password.length < 6) {
+        errorMsg.textContent = "Password must be at least 6 characters long.";
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      // Simulated registration success
+      successMsg.style.display = 'block';
+      registerForm.reset();
+    });
+  </script>
+
+</body>
+</html>
