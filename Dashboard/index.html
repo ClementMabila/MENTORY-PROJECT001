@@ -2,25 +2,504 @@
 <html lang="en">
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Import Font Awesome for professional icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Import Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .link-whole {
+            text-decoration: none;
+        }
+        .dashboard {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        .header {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 24px 32px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .header-title {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-title h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2a3f5f;
+            margin-left: 16px;
+        }
+        
+        .header-title-icon {
+            background-color: #6366f1;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .header-btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        
+        .header-btn i {
+            margin-right: 8px;
+        }
+        
+        .header-btn-primary {
+            background-color: #6366f1;
+            color: white;
+        }
+        
+        .header-btn-secondary {
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+        
+        .header-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+        
+        .header p {
+            font-size: 16px;
+            color: #6b7280;
+            max-width: 80%;
+        }
+        
+        /* Search and Filter Bar */
+        .search-filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 20px;
+            align-items: center;
+        }
+        
+        .search-bar {
+            flex: 1;
+            position: relative;
+            min-width: 300px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        
+        .filter-dropdown {
+            position: relative;
+        }
+        
+        .filter-btn {
+            padding: 12px 20px;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-btn i {
+            margin-right: 8px;
+            color: #6b7280;
+        }
+        
+        .filter-btn:hover {
+            border-color: #d1d5db;
+        }
+        
+        .filter-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 10;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            min-width: 220px;
+            margin-top: 8px;
+            padding: 12px 0;
+            display: none;
+        }
+        
+        .filter-menu.active {
+            display: block;
+        }
+        
+        .filter-option {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .filter-option:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .filter-option.active {
+            background-color: #eff6ff;
+            color: #2563eb;
+            font-weight: 500;
+        }
+        
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-tag {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            background-color: #eff6ff;
+            color: #2563eb;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .filter-tag i {
+            margin-left: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        /* Profiles Container */
+        .profiles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        
+        .profile-card {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            padding: 24px 0;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-body {
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .profile-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+        
+        .profile-title {
+            color: #6366f1;
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+        
+        .profile-bio {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .profile-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .skill {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .search-filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-bar {
+                min-width: 100%;
+            }
+            
+            .profiles-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 6px;
+        }
+        
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .pagination-item:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .pagination-item.active {
+            background-color: #6366f1;
+            color: white;
+        }
+        
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 24px;
+            display: none;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            color: #d1d5db;
+            margin-bottom: 16px;
+        }
+        
+        .empty-state h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 8px;
+        }
+        
+        .empty-state p {
+            color: #6b7280;
+            font-size: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard">
         <div class="header">
-            <h1>Our Creative Team</h1>
+            <div class="header-top">
+                <div class="header-title">
+                    <div class="header-title-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h1>Our Creative Team</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn header-btn-primary">
+                        <i class="fas fa-plus"></i> Add Member
+                    </button>
+                    <button class="header-btn header-btn-secondary">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
             <p>Meet the talented individuals driving our success with their expertise and dedication</p>
+            
+            <div class="search-filter-container">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search by name, role or skill..." id="search-input">
+                </div>
+                
+                <div class="filter-dropdown">
+                    <button class="filter-btn" id="role-filter-btn">
+                        <i class="fas fa-briefcase"></i> Role
+                    </button>
+                    <div class="filter-menu" id="role-filter-menu">
+                        <div class="filter-option" data-value="all">All Roles</div>
+                        <div class="filter-option" data-value="frontend">Front-end Developer</div>
+                        <div class="filter-option" data-value="backend">Backend Developer</div>
+                        <div class="filter-option" data-value="fullstack">Full-Stack Developer</div>
+                    </div>
+                </div>
+                
+                <div class="filter-dropdown">
+                    <button class="filter-btn" id="skill-filter-btn">
+                        <i class="fas fa-code"></i> Skills
+                    </button>
+                    <div class="filter-menu" id="skill-filter-menu">
+                        <div class="filter-option" data-value="all">All Skills</div>
+                        <div class="filter-option" data-value="html">HTML</div>
+                        <div class="filter-option" data-value="css">CSS</div>
+                        <div class="filter-option" data-value="javascript">JavaScript</div>
+                        <div class="filter-option" data-value="java">Java</div>
+                    </div>
+                </div>
+                
+                <div class="active-filters" id="active-filters"></div>
+            </div>
         </div>
 
-        <div class="profiles-container">
+        <div class="profiles-container" id="profiles-container">
             <!-- Profile 1 -->
-             <a href="../pages/kutlwano.html">
-            <div class="profile-card">
+            <div class="profile-card" data-role="frontend" data-skills="html,css,javascript">
                 <div class="profile-header">
                     <div class="profile-avatar">
-                        <img src="../public/images/kutlwano.jpg" alt="Kutlwano Take">
+                        <img src="/public/images/profile.jpg" alt="Kutlwano Take">
                     </div>
                 </div>
                 <div class="profile-body">
+                    <a href="../pages/kutlwano.html" class="link-whole">
                     <h2 class="profile-name">Kutlwano Take</h2>
                     <p class="profile-title">Front-end Web Developer</p>
                     <p class="profile-bio">Turning Vision into Responsive Reality.</p>
@@ -40,17 +519,18 @@
                         <span class="skill">JavaScript</span>
                     </div>
                 </div>
-            </div>
             </a>
+            </div>
+            
             <!-- Profile 2 -->
-             <a href="../pages/andile.html">
-            <div class="profile-card">
+            <div class="profile-card" data-role="frontend" data-skills="html,css,javascript">
                 <div class="profile-header">
                     <div class="profile-avatar">
-                        <img src="/public/images/Andile.jpg" alt="James Rodriguez">
+                        <img src="/public/images/profile.jpg" alt="Andile Phala">
                     </div>
                 </div>
                 <div class="profile-body">
+                    <a href="../pages/andile.html" class="link-whole">
                     <h2 class="profile-name">Andile Phala</h2>
                     <p class="profile-title">Front-end Web Developer</p>
                     <p class="profile-bio">I Code What You Click.</p>
@@ -70,19 +550,21 @@
                         <span class="skill">CSS</span>
                     </div>
                 </div>
-            </div>
             </a>
+            </div>
+
             <!-- Profile 3 -->
-            <div class="profile-card" >
+            <div class="profile-card" data-role="fullstack" data-skills="html,css,javascript">
                 <div class="profile-header">
                     <div class="profile-avatar">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya Patel">
+                        <img src="/public/images/profile.jpg" alt="Clement Mabila">
                     </div>
                 </div>
                 <div class="profile-body">
+                    <a href="../pages/clement.html" class="link-whole">
                     <h2 class="profile-name">Clement Mabila</h2>
                     <p class="profile-title">Full-Stack Developer</p>
-                    <p class="profile-bio">From Front to Back, I’ve Got Your Stack.</p>
+                    <p class="profile-bio">From Front to Back, I've Got Your Stack.</p>
                     <div class="profile-stats">
                         <div class="stat">
                             <div class="stat-value">73%</div>
@@ -95,16 +577,18 @@
                         <span class="skill">JavaScript</span>
                     </div>
                 </div>
+            </a>
             </div>
 
             <!-- Profile 4 -->
-            <div class="profile-card">
+            <div class="profile-card" data-role="backend" data-skills="java">
                 <div class="profile-header">
                     <div class="profile-avatar">
-                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="David Kim">
+                        <img src="/public/images/profile.jpg" alt="Tlokotse Mogudi">
                     </div>
                 </div>
                 <div class="profile-body">
+                    <a href="../pages/tlokotse.html" class="link-whole">
                     <h2 class="profile-name">Tlokotse Mogudi</h2>
                     <p class="profile-title">Backend Web Developer</p>
                     <p class="profile-bio">Powering the Web Behind the Scenes.</p>
@@ -122,16 +606,18 @@
                         <span class="skill">Java</span>
                     </div>
                 </div>
+            </a>
             </div>
 
             <!-- Profile 5 -->
-            <div class="profile-card">
+            <div class="profile-card" data-role="frontend" data-skills="html,css,javascript">
                 <div class="profile-header">
                     <div class="profile-avatar">
-                        <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="Emma Wilson">
+                        <img src="/public/images/profile.jpg" alt="Tshireletso Mogwere">
                     </div>
                 </div>
                 <div class="profile-body">
+                    <a href="../pages/tshireletso.html" class="link-whole">
                     <h2 class="profile-name">Tshireletso Mogwere</h2>
                     <p class="profile-title">Frontend Web Developer</p>
                     <p class="profile-bio">Front-End Focused. User First.</p>
@@ -151,16 +637,18 @@
                         <span class="skill">JavaScript</span>
                     </div>
                 </div>
+            </a>
             </div>
 
             <!-- Profile 6 -->
-            <div class="profile-card">
+            <div class="profile-card" data-role="frontend" data-skills="html,css,javascript">
                 <div class="profile-header">
                     <div class="profile-avatar">
-                        <img src="https://randomuser.me/api/portraits/men/81.jpg" alt="Michael Johnson">
+                        <img src="/public/images/profile.jpg" alt="Nkululeko Vuyo Zikode">
                     </div>
                 </div>
                 <div class="profile-body">
+                    <a href="../pages/vuyo.html" class="link-whole">
                     <h2 class="profile-name">Nkululeko Vuyo Zikode</h2>
                     <p class="profile-title">Frontend Web Developer</p>
                     <p class="profile-bio">Design. Code. Optimize. Repeat.</p>
@@ -176,8 +664,287 @@
                         <span class="skill">JavaScript</span>
                     </div>
                 </div>
+            </a>
             </div>
         </div>
+
+        <!-- Empty state when no results found -->
+        <div class="empty-state" id="empty-state">
+            <i class="fas fa-search"></i>
+            <h3>No team members found</h3>
+            <p>Try adjusting your search or filter criteria to find what you're looking for.</p>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <div class="pagination-item"><i class="fas fa-chevron-left"></i></div>
+            <div class="pagination-item active">1</div>
+            <div class="pagination-item">2</div>
+            <div class="pagination-item">3</div>
+            <div class="pagination-item"><i class="fas fa-chevron-right"></i></div>
+        </div>
     </div>
+
+    <script>
+        // Function to toggle filter menus
+        function setupFilterDropdowns() {
+            const roleFilterBtn = document.getElementById('role-filter-btn');
+            const roleFilterMenu = document.getElementById('role-filter-menu');
+            const skillFilterBtn = document.getElementById('skill-filter-btn');
+            const skillFilterMenu = document.getElementById('skill-filter-menu');
+            
+            roleFilterBtn.addEventListener('click', () => {
+                roleFilterMenu.classList.toggle('active');
+                skillFilterMenu.classList.remove('active');
+            });
+            
+            skillFilterBtn.addEventListener('click', () => {
+                skillFilterMenu.classList.toggle('active');
+                roleFilterMenu.classList.remove('active');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.filter-dropdown')) {
+                    roleFilterMenu.classList.remove('active');
+                    skillFilterMenu.classList.remove('active');
+                }
+            });
+        }
+        
+        // Function to handle filtering
+        function setupFiltering() {
+            const searchInput = document.getElementById('search-input');
+            const profileCards = document.querySelectorAll('.profile-card');
+            const emptyState = document.getElementById('empty-state');
+            const roleOptions = document.querySelectorAll('#role-filter-menu .filter-option');
+            const skillOptions = document.querySelectorAll('#skill-filter-menu .filter-option');
+            const activeFilters = document.getElementById('active-filters');
+            
+            let currentFilters = {
+                search: '',
+                role: 'all',
+                skills: []
+            };
+            
+            // Search functionality
+            searchInput.addEventListener('input', (e) => {
+                currentFilters.search = e.target.value.toLowerCase();
+                applyFilters();
+            });
+            
+            // Role filter options
+            roleOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const value = option.getAttribute('data-value');
+                    currentFilters.role = value;
+                    
+                    // Update active state in menu
+                    roleOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    
+                    // Update filter tags
+                    updateFilterTags();
+                    applyFilters();
+                    
+                    // Close dropdown
+                    document.getElementById('role-filter-menu').classList.remove('active');
+                });
+            });
+            
+            // Skill filter options
+            skillOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const value = option.getAttribute('data-value');
+                    
+                    if (value === 'all') {
+                        currentFilters.skills = [];
+                        skillOptions.forEach(opt => {
+                            if (opt.getAttribute('data-value') !== 'all') {
+                                opt.classList.remove('active');
+                            } else {
+                                opt.classList.add('active');
+                            }
+                        });
+                    } else {
+                        // Toggle the skill
+                        const index = currentFilters.skills.indexOf(value);
+                        if (index === -1) {
+                            currentFilters.skills.push(value);
+                            option.classList.add('active');
+                        } else {
+                            currentFilters.skills.splice(index, 1);
+                            option.classList.remove('active');
+                        }
+                        
+                        // Update "All" option state
+                        const allOption = document.querySelector('#skill-filter-menu .filter-option[data-value="all"]');
+                        if (currentFilters.skills.length === 0) {
+                            allOption.classList.add('active');
+                        } else {
+                            allOption.classList.remove('active');
+                        }
+                    }
+                    
+                    // Update filter tags
+                    updateFilterTags();
+                    applyFilters();
+                });
+            });
+            
+            // Function to update filter tags display
+            function updateFilterTags() {
+                activeFilters.innerHTML = '';
+                
+                // Add role tag if not "all"
+                if (currentFilters.role !== 'all') {
+                    const roleTag = document.createElement('div');
+                    roleTag.className = 'filter-tag';
+                    roleTag.innerHTML = `Role: ${currentFilters.role} <i class="fas fa-times" data-type="role"></i>`;
+                    
+                    roleTag.querySelector('i').addEventListener('click', () => {
+                        currentFilters.role = 'all';
+                        roleOptions.forEach(opt => {
+                            opt.classList.remove('active');
+                            if (opt.getAttribute('data-value') === 'all') {
+                                opt.classList.add('active');
+                            }
+                        });
+                        updateFilterTags();
+                        applyFilters();
+                    });
+                    
+                    activeFilters.appendChild(roleTag);
+                }
+                
+                // Add skill tags
+                currentFilters.skills.forEach(skill => {
+                    const skillTag = document.createElement('div');
+                    skillTag.className = 'filter-tag';
+                    skillTag.innerHTML = `Skill: ${skill} <i class="fas fa-times" data-type="skill" data-value="${skill}"></i>`;
+                    
+                    skillTag.querySelector('i').addEventListener('click', () => {
+                        const index = currentFilters.skills.indexOf(skill);
+                        if (index !== -1) {
+                            currentFilters.skills.splice(index, 1);
+                            
+                            // Update skill option state
+                            const skillOption = document.querySelector(`#skill-filter-menu .filter-option[data-value="${skill}"]`);
+                            if (skillOption) {
+                                skillOption.classList.remove('active');
+                            }
+                            
+                            // Update "All" option state
+                            if (currentFilters.skills.length === 0) {
+                                const allOption = document.querySelector('#skill-filter-menu .filter-option[data-value="all"]');
+                                allOption.classList.add('active');
+                            }
+                            
+                            updateFilterTags();
+                            applyFilters();
+                        }
+                    });
+                    
+                    activeFilters.appendChild(skillTag);
+                });
+            }
+            
+            // Apply all filters
+            function applyFilters() {
+    let visibleCount = 0;
+    
+    profileCards.forEach(card => {
+        const name = card.querySelector('.profile-name').textContent.toLowerCase();
+        const title = card.querySelector('.profile-title').textContent.toLowerCase();
+        const bio = card.querySelector('.profile-bio').textContent.toLowerCase();
+        const skillElements = card.querySelectorAll('.skill');
+        const skillTexts = Array.from(skillElements).map(el => el.textContent.toLowerCase());
+        const cardRole = card.getAttribute('data-role');
+        const cardSkills = card.getAttribute('data-skills').split(',');
+        
+        // Search filter
+        const matchesSearch = 
+            currentFilters.search === '' || 
+            name.includes(currentFilters.search) || 
+            title.includes(currentFilters.search) || 
+            bio.includes(currentFilters.search) ||
+            skillTexts.some(skill => skill.includes(currentFilters.search));
+        
+        // Role filter
+        const matchesRole = currentFilters.role === 'all' || cardRole === currentFilters.role;
+        
+        // Skills filter
+        const matchesSkills = 
+            currentFilters.skills.length === 0 || 
+            currentFilters.skills.every(skill => cardSkills.includes(skill));
+        
+        // Apply all filters
+        const isVisible = matchesSearch && matchesRole && matchesSkills;
+        card.style.display = isVisible ? 'block' : 'none';
+        
+        if (isVisible) {
+            visibleCount++;
+        }
+    }); // This closing parenthesis was missing
+    
+    // Show/hide empty state
+    emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    
+    // Handle pagination visibility
+    const pagination = document.getElementById('pagination');
+    pagination.style.display = visibleCount === 0 ? 'none' : 'flex';
+}
+        }
+        
+        // Setup pagination functionality
+        function setupPagination() {
+            const paginationItems = document.querySelectorAll('.pagination-item');
+            
+            paginationItems.forEach((item, index) => {
+                if (index > 0 && index < paginationItems.length - 1) { // Skip prev/next buttons
+                    item.addEventListener('click', () => {
+                        paginationItems.forEach(pi => pi.classList.remove('active'));
+                        item.classList.add('active');
+                        // In a real app, this would load the corresponding page of results
+                    });
+                }
+            });
+            
+            // Prev button
+            paginationItems[0].addEventListener('click', () => {
+                const activePage = document.querySelector('.pagination-item.active');
+                const activeIndex = Array.from(paginationItems).indexOf(activePage);
+                
+                if (activeIndex > 1) { // If not the first page
+                    paginationItems.forEach(pi => pi.classList.remove('active'));
+                    paginationItems[activeIndex - 1].classList.add('active');
+                    // In a real app, this would load the previous page
+                }
+            });
+            
+            // Next button
+            paginationItems[paginationItems.length - 1].addEventListener('click', () => {
+                const activePage = document.querySelector('.pagination-item.active');
+                const activeIndex = Array.from(paginationItems).indexOf(activePage);
+                
+                if (activeIndex < paginationItems.length - 2) { // If not the last page
+                    paginationItems.forEach(pi => pi.classList.remove('active'));
+                    paginationItems[activeIndex + 1].classList.add('active');
+                    // In a real app, this would load the next page
+                }
+            });
+        }
+        
+        // Initialize all functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            setupFilterDropdowns();
+            setupFiltering();
+            setupPagination();
+            
+            // Set initial states
+            document.querySelector('#role-filter-menu .filter-option[data-value="all"]').classList.add('active');
+            document.querySelector('#skill-filter-menu .filter-option[data-value="all"]').classList.add('active');
+        });
+    </script>
 </body>
 </html>
